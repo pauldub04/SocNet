@@ -64,7 +64,7 @@ export default {
         },
         {
           label: "Найти друзей",
-          path: "/find-friends",
+          path: "/users",
           icon: "mdi-account-plus"
         }
       ]
