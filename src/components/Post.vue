@@ -4,7 +4,7 @@
   >
     <v-list-item>
       <v-list-item-avatar>
-        <img src="https://randomuser.me/api/portraits/men/7.jpg" >
+        <img :src="img">
       </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title class="headline">{{title}}</v-list-item-title>
@@ -31,7 +31,7 @@
 
 <script>
 export default {
-    props: ['title', 'author', 'text'],
+    props: ['title', 'author', 'text', 'img'],
     data(){
         return {
         }

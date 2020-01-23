@@ -17,8 +17,8 @@
             </v-list-item-avatar>
 
             <v-list-item-content class="text-left">
-              <v-item-title class="font-weight-black">SocialLink</v-item-title>
-              <v-item-subtitle>Иван Иванов</v-item-subtitle>
+              <v-list-item-title class="font-weight-black">SocialLink</v-list-item-title>
+              <v-list-item-subtitle>Иван Иванов</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
 
@@ -27,13 +27,14 @@
           <v-list-item link
                        v-for="link in links" 
                        :key="link.path" 
-                       :to="link.path">
+                       :to="link.path"
+                       exact>
             <v-list-item-icon>
               <v-icon>{{link.icon}}</v-icon>
             </v-list-item-icon> 
 
             <v-list-item-content>
-              <v-item-title class="text-left">{{link.label}}</v-item-title>
+              <v-list-item-title class="text-left">{{link.label}}</v-list-item-title>
             </v-list-item-content>       
           </v-list-item>
         </v-list>
@@ -59,7 +60,7 @@ export default {
         },
         {
           label: "Профиль",
-          path: "/profile",
+          path: "/users/1",
           icon: "mdi-account"
         },
         {
