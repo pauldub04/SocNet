@@ -4,14 +4,19 @@
            justify="center"
            :key="n"
     >
-        <v-col cols="5"
-               v-for="k in 2"
-               :key="k"
-        >
-            <ProfileCard :name="users[n + k - 2 + cardValue(k)].name"
-                         :username="users[n + k - 2 + cardValue(k)].username"
-                         :id="n + k - 2 + cardValue(k)"
-                         :city="users[n + k - 2 + cardValue(k)].address.city"
+        <v-col cols="5">
+            <ProfileCard :name="users[cardValue(1, n)].name"
+                         :username="users[cardValue(1, n)].username"
+                         :id="cardValue(1, n)"
+                         :city="users[cardValue(1, n)].address.city"
+            ></ProfileCard>
+
+        </v-col>
+        <v-col cols="5">
+            <ProfileCard :name="users[cardValue(2, n)].name"
+                         :username="users[cardValue(2, n)].username"
+                         :id="cardValue(2, n)"
+                         :city="users[cardValue(2, n)].address.city"
             ></ProfileCard>
 
         </v-col>
@@ -46,11 +51,11 @@ export default {
         }
     },
     methods: {
-        cardValue(x) {
-            if (x == 1)
-                return 0
+        cardValue(k, n) {
+            if (k == 1)
+                return n - 1;
             else
-                return 1
+                return n - 1 + (this.users.length / 2);
         }
     }
 }

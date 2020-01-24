@@ -16,7 +16,7 @@
         ></v-divider>
         <v-col>
           <v-list-item-content>
-            <v-list-item-title class="headline">{{name}} - {{username}}</v-list-item-title>
+            <v-list-item-title class="headline">{{name}}</v-list-item-title>
             <v-list-item-subtitle>{{city}}</v-list-item-subtitle>
           </v-list-item-content>
         </v-col>
@@ -28,7 +28,7 @@
     <v-card-actions>
         <v-btn
           text
-          color="green"
+          color="green-darken-2"
           
         >
             <i class="mdi mdi-account-box-outline"></i>
