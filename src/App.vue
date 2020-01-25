@@ -42,7 +42,7 @@
     
     <v-content class="px-12 py-3">
       <v-container fluid>
-        <router-view/>
+        <router-view v-on:login="updateUser"/>
       </v-container>
     </v-content>
 
@@ -51,7 +51,8 @@
 
 <script>
 export default {
-  data: () => ({
+  data() {
+    return {
       links: [
         {
           label: "Главная",
@@ -67,9 +68,20 @@ export default {
           label: "Найти друзей",
           path: "/users",
           icon: "mdi-account-plus"
+        },
+        {
+          label: "Войти",
+          path: "/login",
+          icon: "mdi-login"
         }
-      ]
-  })
+      ],
+    }
+  },
+  methods: {
+    updateUser(_id) {
+      this.links[1].path = "/users/" + _id;
+    }
+  }
 }
 </script>
 

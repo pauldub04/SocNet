@@ -28,7 +28,7 @@
     <v-card-actions>
         <v-btn
           text
-          color="green-darken-2"
+          color="green"
           
         >
             <i class="mdi mdi-account-box-outline"></i>
