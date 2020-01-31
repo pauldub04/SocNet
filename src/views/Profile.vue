@@ -16,7 +16,7 @@
             </v-col>
             <v-col cols="10" class="text-left">
                 <p>
-                    Веб-сайт: <a :href="'http://' + user.website" target="_blank">{{user.website}}</a>
+                    Веб-сайт: <a :href="urlUpgrade(user.website)" target="_blank">{{user.website}}</a>
                 </p>
                 <p>
                     E-mail: <a :href="`mailto:${user.email}`">{{user.email}}</a>
@@ -45,7 +45,7 @@
             </v-col>
         </v-row>
     </div>
-    <div>
+    <div v-else>
         <div class="my-10">Вы дожны войти, чтобы просматривать страницы</div>
         <v-list-item link
                      to="/">
@@ -66,35 +66,46 @@
 import Post from '../components/Post.vue'
 
 export default {
-    props: ['user', 'isLogined'],
+    props: ['curUserId', 'isLogined', 'axiosLink'],
     components: {
       Post
     },
     data(){
         return {
-            profile: null,
             posts: [],
+            user: {}
         }
     },
     watch: {
         $route: {
             handler(){
-                this.$axios.get('http://jsonplaceholder.typicode.com/users/'+ this.$route.params.id)
-                // /http://188.225.47.187/api/jsonplaceholder.php?endpoint=users/
-                .then(response=>{
-                    this.profile = response.data
-                })
-                this.$axios.get('http://jsonplaceholder.typicode.com/posts')
-                //http://188.225.47.187/api/jsonplaceholder.php?endpoint=posts
-                .then(response=>{
-                    this.posts = response.data
-                })
+                this.upd();
             },
             immediate: true,
         }
     },
+    methods: {
+        urlUpgrade (url) {
+            if (url[0] == 'h')
+                return url;
+            else
+                return 'http://' + url;
+        },
+        upd () {
+            this.$axios.get(this.axiosLink)
+                .then(response=>{
+                    this.user = response.data[(this.$route.params.id - 1)]
+                })
+                this.$axios.get('http://jsonplaceholder.typicode.com/posts')
+                //http://188.225.47.187/api/jsonplaceholder.php?endpoint=posts
+                .then(response=>{
+                    this.posts = response.data;
+                    console.log(this.posts);
+                })
+        }
+    },
     mounted() {
-        //console.log(this.user);
+        this.upd();
     }
 }
 </script>

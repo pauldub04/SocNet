@@ -59,7 +59,7 @@
       <v-container fluid>
         <router-view v-on:login="updateUser"
                      :isLogined="isLogined"
-                     :user="currentUser"
+                     :curUserId="curUserId"
                      :axiosLink="axiosLink"/>
       </v-container>
     </v-content>
@@ -80,7 +80,7 @@ export default {
         },
         {
           label: "Профиль",
-          path: "/users/1",
+          path: "/users/",
           icon: "mdi-account",
           action: "",
         },
@@ -93,20 +93,20 @@ export default {
       ],
       isLogined: false,
       currentUser: {},
+      curUserId: '',
       axiosLink: 'http://188.225.47.187/api/jsonstorage/16511f65a152238deddcf81efe9fbcd7',
     }
   },
   methods: {
     updateUser(_id, user) {
+      this.isLogined = true;
+      this.curUserId = _id;
       this.currentUser = user;
       this.links[1].path = "/users/" + _id;
-      this.isLogined = true;
-      //console.log(this.currentUser);
     },
     logout() {
       this.isLogined = false;
       this.$router.push('/');
-      //console.log('asdsad');
     }
   }
 }

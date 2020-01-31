@@ -6,7 +6,7 @@
       <v-row>
         <v-col cols="2">
             <v-list-item-avatar size="75">
-              <img :src="'https://randomuser.me/api/portraits/men/' + id + '.jpg'">
+              <img :src="img">
             </v-list-item-avatar>
         </v-col>
         
@@ -24,26 +24,19 @@
       </v-row>
     </v-list-item>
 
-    
-    <v-card-actions>
-        <v-btn
-          text
-          color="green"
-          
-        >
-            <i class="mdi mdi-account-box-outline"></i>
-            <div class="mx-2">Перейти в профиль</div>
-        </v-btn>
-    </v-card-actions>
+    <v-list-item link :to="'/users/' + (id + 1)">
+      <i class="mdi mdi-account-box-outline"></i>
+      <div class="mx-2">Перейти в профиль</div>
+    </v-list-item>
+
   </v-card>
 </template>
 
 <script>
 export default {
-    props: ['name', 'username', 'id', 'city'],
+    props: ['name', 'id', 'city', 'img'],
     data(){
         return {
-            imageSrc: 'https://randomuser.me/api/portraits/men/' + this.$route.params.id + '.jpg',
         }
     }
 }

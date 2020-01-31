@@ -6,17 +6,17 @@
     >
         <v-col cols="5">
             <ProfileCard :name="users[cardValue(1, n)].name"
-                         :username="users[cardValue(1, n)].username"
                          :id="cardValue(1, n)"
-                         :city="users[cardValue(1, n)].address.city"
+                         :city="users[cardValue(1, n)].city"
+                         :img="users[cardValue(1, n)].photo"
             ></ProfileCard>
 
         </v-col>
         <v-col cols="5">
             <ProfileCard :name="users[cardValue(2, n)].name"
-                         :username="users[cardValue(2, n)].username"
                          :id="cardValue(2, n)"
-                         :city="users[cardValue(2, n)].address.city"
+                         :city="users[cardValue(2, n)].city"
+                         :img="users[cardValue(2, n)].photo"
             ></ProfileCard>
 
         </v-col>
@@ -32,6 +32,7 @@ export default {
     components: {
       ProfileCard
     },
+    props: ['axiosLink'],
     data(){
         return {
             users: [],
@@ -40,10 +41,8 @@ export default {
     watch: {
         $route: {
             handler(){
-                this.$axios.get('http://jsonplaceholder.typicode.com/users')
-                // /http://188.225.47.187/api/jsonplaceholder.php?endpoint=users/
+                this.$axios.get(this.axiosLink)
                 .then(response=>{
-                    console.log('response', response)
                     this.users = response.data
                 })
             },
