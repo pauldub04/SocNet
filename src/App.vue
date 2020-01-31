@@ -1,33 +1,48 @@
 <template>
   <v-app id="app">
-      <v-navigation-drawer color="green"
+      <v-navigation-drawer v-if="isLogined"
+                           color="green"
                            dark
                            expand-on-hover
                            hide-overlay
                            permanent
                            right
                            app>
-        <v-list
-            nav 
-            shaped
-            dense>
+        <v-list nav 
+                shaped
+                dense>
           <v-list-item two-line>
             <v-list-item-avatar>
-              <img :src="'https://randomuser.me/api/portraits/men/1.jpg'" alt="мужчина">
+              <img :src="currentUser.photo" alt="мужчина">
             </v-list-item-avatar>
 
             <v-list-item-content class="text-left">
-              <v-list-item-title class="font-weight-black">SocialLink</v-list-item-title>
-              <v-list-item-subtitle>Иван Иванов</v-list-item-subtitle>
+              <v-list-item-title class="font-weight-black">{{currentUser.company}}</v-list-item-title>
+              <v-list-item-subtitle>{{currentUser.name}}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
+          
 
+          <v-list-item link
+                       v-if="isLogined"
+                       @click="logout">
+              <v-list-item-icon>
+                <v-icon>mdi-logout</v-icon>
+              </v-list-item-icon> 
+
+              <v-list-item-content>
+                <v-list-item-title class="text-left">Выйти</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+
+          <!-------------------------------------------->
           <v-divider class="my-3"></v-divider>
 
           <v-list-item link
                        v-for="link in links" 
                        :key="link.path" 
                        :to="link.path"
+                       @click="link.action"
                        exact>
             <v-list-item-icon>
               <v-icon>{{link.icon}}</v-icon>
@@ -42,7 +57,10 @@
     
     <v-content class="px-12 py-3">
       <v-container fluid>
-        <router-view v-on:login="updateUser"/>
+        <router-view v-on:login="updateUser"
+                     :isLogined="isLogined"
+                     :user="currentUser"
+                     :axiosLink="axiosLink"/>
       </v-container>
     </v-content>
 
@@ -57,29 +75,38 @@ export default {
         {
           label: "Главная",
           path: "/",
-          icon: "mdi-home-outline"
+          icon: "mdi-home-outline",
+          action: "",
         },
         {
           label: "Профиль",
           path: "/users/1",
-          icon: "mdi-account"
+          icon: "mdi-account",
+          action: "",
         },
         {
           label: "Найти друзей",
           path: "/users",
-          icon: "mdi-account-plus"
+          icon: "mdi-account-plus",
+          action: "",
         },
-        {
-          label: "Войти",
-          path: "/login",
-          icon: "mdi-login"
-        }
       ],
+      isLogined: false,
+      currentUser: {},
+      axiosLink: 'http://188.225.47.187/api/jsonstorage/16511f65a152238deddcf81efe9fbcd7',
     }
   },
   methods: {
-    updateUser(_id) {
+    updateUser(_id, user) {
+      this.currentUser = user;
       this.links[1].path = "/users/" + _id;
+      this.isLogined = true;
+      //console.log(this.currentUser);
+    },
+    logout() {
+      this.isLogined = false;
+      this.$router.push('/');
+      //console.log('asdsad');
     }
   }
 }

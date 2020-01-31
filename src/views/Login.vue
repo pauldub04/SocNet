@@ -31,6 +31,7 @@
 
 <script>
 export default {
+    props: ['axiosLink'],
     data() {
       return {
           password: '',
@@ -39,14 +40,15 @@ export default {
     },
     methods: {
         auth() {
-            this.axios.get('http://188.225.47.187/api/jsonstorage/d69cd49ad6075b12ccaf4eeffd4f412f')
+            this.axios.get(this.axiosLink)
                 .then((responce) => {
                     let users =  responce.data;
                     let found = false;
                     for (let index in users) {
                         if (this.login == users[index].login && this.password == users[index].password) {
-                            this.$emit('login', users[index].id);
-                            this.$router.push('/users/' + users[index].id);
+                            let id = parseInt(index) + 1;
+                            this.$emit('login', id, users[index]);
+                            this.$router.push('/users/' + id);
                             found = true;
                             break;
                         }
