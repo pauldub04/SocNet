@@ -1,4 +1,7 @@
-# dinmar
+# Social Network
+
+# Link to JSON with all users
+http://188.225.47.187/api/jsonstorage/16511f65a152238deddcf81efe9fbcd7
 
 ## Project setup
 ```
