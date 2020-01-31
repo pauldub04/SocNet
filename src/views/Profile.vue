@@ -1,6 +1,18 @@
 <template>
 <div>
-    <div v-if="isLogined">
+    <div v-if="!isLogined">
+        <v-list-item link
+                     to="/">
+          <v-list-item-icon>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-icon> 
+
+          <v-list-item-content>
+            <v-list-item-title class="text-left">На главную</v-list-item-title>
+          </v-list-item-content>       
+        </v-list-item>
+    </div>
+    <div>
         <v-row class="text-left">
             <v-col cols="10">
                 <h1 class="green--text text--darken-2">
@@ -37,26 +49,13 @@
                 <Post v-for="post in posts"
                       :key="post.id"
                       :title="post.title"
-                      :author="profile.name"
+                      :author="user.name"
                       :text="post.body"
                       :img="user.photo"
                       class="post">
                 </Post>
             </v-col>
         </v-row>
-    </div>
-    <div v-else>
-        <div class="my-10">Вы дожны войти, чтобы просматривать страницы</div>
-        <v-list-item link
-                     to="/">
-          <v-list-item-icon>
-            <v-icon>mdi-home</v-icon>
-          </v-list-item-icon> 
-
-          <v-list-item-content>
-            <v-list-item-title class="text-left">На главную</v-list-item-title>
-          </v-list-item-content>       
-        </v-list-item>
     </div>
 </div>
 </template>
@@ -100,7 +99,6 @@ export default {
                 //http://188.225.47.187/api/jsonplaceholder.php?endpoint=posts
                 .then(response=>{
                     this.posts = response.data;
-                    console.log(this.posts);
                 })
         }
     },
