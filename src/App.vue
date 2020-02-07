@@ -1,6 +1,6 @@
 <template>
   <v-app id="app">
-      <v-navigation-drawer v-if="isLogined"
+      <v-navigation-drawer v-if="$store.getters.getIsLogined"
                            color="green"
                            dark
                            expand-on-hover
@@ -13,18 +13,18 @@
                 dense>
           <v-list-item two-line>
             <v-list-item-avatar>
-              <img :src="currentUser.photo" alt="мужчина">
+              <img :src="$store.getters.getUser.photo" alt="мужчина">
             </v-list-item-avatar>
 
             <v-list-item-content class="text-left">
-              <v-list-item-title class="font-weight-black">{{currentUser.company}}</v-list-item-title>
-              <v-list-item-subtitle>{{currentUser.name}}</v-list-item-subtitle>
+              <v-list-item-title class="font-weight-black">{{$store.getters.getUser.company}}</v-list-item-title>
+              <v-list-item-subtitle>{{$store.getters.getUser.name}}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
           
 
           <v-list-item link
-                       v-if="isLogined"
+                       v-if="$store.getters.getIsLogined"
                        @click="logout">
               <v-list-item-icon>
                 <v-icon>mdi-logout</v-icon>
@@ -59,7 +59,6 @@
       <v-container fluid>
         <router-view v-on:login="updateUser"
                      :isLogined="isLogined"
-                     :curUserId="curUserId"
                      :axiosLink="axiosLink"/>
       </v-container>
     </v-content>
@@ -91,21 +90,18 @@ export default {
           action: "",
         },
       ],
-      isLogined: false,
-      currentUser: {},
-      curUserId: '',
-      axiosLink: 'http://188.225.47.187/api/jsonstorage/16511f65a152238deddcf81efe9fbcd7',
     }
   },
   methods: {
     updateUser(_id, user) {
-      this.isLogined = true;
-      this.curUserId = _id;
-      this.currentUser = user;
+      this.$store.dispatch('setUser', {
+                                        user: user,
+                                        id: _id
+                                      });
       this.links[1].path = "/users/" + _id;
     },
     logout() {
-      this.isLogined = false;
+      this.$store.dispatch('delUser');
       this.$router.push('/');
     }
   }

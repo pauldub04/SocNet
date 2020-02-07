@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div v-if="!isLogined">
+    <div v-if="!$store.getters.getIsLogined">
         <v-list-item link
                      to="/">
           <v-list-item-icon>
@@ -66,7 +66,6 @@
 import Post from '../components/Post.vue'
 
 export default {
-    props: ['curUserId', 'isLogined', 'axiosLink'],
     components: {
       Post
     },
@@ -92,7 +91,7 @@ export default {
                 return 'http://' + url;
         },
         upd () {
-            this.$axios.get(this.axiosLink)
+            this.$axios.get(this.$store.getters.getAxiosLink)
                 .then(response=>{
                     this.user = response.data[(this.$route.params.id - 1)]
                 })

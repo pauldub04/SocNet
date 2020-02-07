@@ -26,7 +26,6 @@
 
 <script>
 export default {
-    props: ['axiosLink'],
     data() {
       return {
         userInfo: {
@@ -85,7 +84,7 @@ export default {
     },
     methods: {
         signUp () {
-            this.axios.get(this.axiosLink)
+            this.axios.get(this.$store.getters.getAxiosLink)
                 .then((responce) => {
                     let curUsers = responce.data;
                     curUsers[curUsers.length] = {
@@ -98,7 +97,7 @@ export default {
                         'company' : this.userInfo.company,
                         'photo' : this.userInfo.photo,
                     }
-                    this.axios.put(this.axiosLink, curUsers);
+                    this.axios.put(this.$store.getters.getAxiosLink, curUsers);
                     window.alert('Вы успешно зарегистировалтсь! Войдите в аккаунт');
                     this.$router.push('/login');
                 })

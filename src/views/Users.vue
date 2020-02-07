@@ -32,7 +32,6 @@ export default {
     components: {
       ProfileCard
     },
-    props: ['axiosLink'],
     data(){
         return {
             users: [],
@@ -41,7 +40,7 @@ export default {
     watch: {
         $route: {
             handler(){
-                this.$axios.get(this.axiosLink)
+                this.$axios.get(this.$store.getters.getAxiosLink)
                 .then(response=>{
                     this.users = response.data
                 })

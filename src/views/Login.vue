@@ -31,7 +31,6 @@
 
 <script>
 export default {
-    props: ['axiosLink'],
     data() {
       return {
           password: '',
@@ -40,7 +39,7 @@ export default {
     },
     methods: {
         auth() {
-            this.axios.get(this.axiosLink)
+            this.axios.get(this.$store.getters.getAxiosLink)
                 .then((responce) => {
                     let users =  responce.data;
                     let found = false;
