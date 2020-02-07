@@ -99,6 +99,7 @@ export default {
                     }
                     this.axios.put(this.$store.getters.getAxiosLink, curUsers);
                     window.alert('Вы успешно зарегистировалтсь! Войдите в аккаунт');
+                    
                     this.$router.push('/login');
                 })
         }

@@ -2,7 +2,7 @@
 <div>
 
   <h1>Главная страница</h1>
-  <div class="d-flex justify-center" v-if="!isLogined">
+  <div class="d-flex justify-center" v-if="!$store.getters.getIsLogined">
     <v-card width="600px" class="mt-12 pa-10">
       <v-list nav 
               shaped
@@ -49,7 +49,7 @@
           </v-list-item-content>       
         </v-list-item>
         <v-list-item link
-                     :to="'/users/' + curUserId"
+                     :to="'/users/' + $store.getters.getId"
                      exact>
           <v-list-item-icon>
             <v-icon>mdi-account</v-icon>
@@ -67,7 +67,6 @@
 
 <script>
 export default {
-	props: ['isLogined', 'curUserId'],
 
 }
 </script>
