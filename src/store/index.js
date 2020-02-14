@@ -8,7 +8,7 @@ export default new Vuex.Store({
     user: {},
     id: '',
     usersLink: 'http://188.225.47.187/api/jsonstorage/16511f65a152238deddcf81efe9fbcd7',
-    postsLink: 'http://188.225.47.187/api/jsonstorage/2c037b6e61776ba2b20ae7fef3b0652b',
+    postsLink: 'http://188.225.47.187/api/jsonstorage/04946c4bee9501b954a161959b17f05b',
     isLogined: false,
 
   },

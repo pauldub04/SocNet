@@ -43,43 +43,49 @@
             </v-col>
         </v-row>
         
-        <v-divider class="my-3"></v-divider>
-        
         <div v-if="$store.getters.getIsLogined">
+            <v-divider class="my-3"></v-divider>
             <v-row class="text-left">
                 <v-col cols="9">
-                    <h2 class="myt-3">Создать новую публикацию</h2>
-                    <v-text-field 
-                    outlined
-                    color="teal"
-                    label="Заголовок"
-                    v-model="name">
+                    <h2 class="mb-5">Создать публикацию</h2>
+                    <v-text-field
+                        color="teal" 
+                        outlined
+                        label="Заголовок"
+                        v-model="title">
                     </v-text-field>
                     <v-text-field 
-                    outlined
-                    label="Текст"
-                    color="teal"
-                    v-model="text">
+                        color="teal"
+                        outlined
+                        label="Текст"
+                        v-model="text">
                     </v-text-field>
-                <v-btn color="teal" class="white--text" @click="send()">Опубликовать</v-btn>
+                <v-btn color="teal"
+                       outlined 
+                       class="white--text" 
+                       @click="send()" >
+                   Опубликовать
+               </v-btn>
                 </v-col>
             </v-row>
-            <v-divider class="my-3"></v-divider>
         </div>
-
-        <v-row class="text-left">
-                <h2>Публикации</h2>
-            <v-col cols="9">
-                <Post v-for="post in posts"
-                      :key="post.id"
-                      :title="post.title"
-                      :author="user.name"
-                      :text="post.body"
-                      :img="user.photo"
-                      class="post">
-                </Post>
-            </v-col>
-        </v-row>
+        
+        <div v-if="posts.length > 0">
+            <v-divider class="my-3"></v-divider>
+            <v-row class="text-left">
+                <v-col cols="9">
+                    <h2 class="mb-5">Публикации</h2>
+                    <Post v-for="post in posts"
+                          :title="post.title"
+                          :text="post.text"
+                          :key="post.authorId"
+                          :author="allUsers[post.authorId].name"
+                          :img="allUsers[post.authorId].photo"
+                          class="mb-5">
+                    </Post>
+                </v-col>
+            </v-row>
+        </div>
     </div>
 </div>
 </template>
@@ -96,7 +102,8 @@ export default {
         return {
             posts: [],
             user: {},
-            name : '',
+            allUsers: [],
+            title : '',
             text : ''
         }
     },
@@ -119,11 +126,43 @@ export default {
             this.$axios.get(this.$store.getters.getUserLink)
                 .then(response=>{
                     this.user = response.data[(this.$route.params.id - 1)];
+                    this.allUsers = response.data;
                 })
             this.$axios.get(this.$store.getters.getPostLink)
                 .then(response=>{
-                    this.posts = response.data[(this.$route.params.id - 1)];
+                    let curPosts = response.data[(this.$route.params.id - 1)];
+                    this.posts = curPosts.reverse();
                 })
+        },
+        send() {
+            this.axios.get(this.$store.getters.getPostLink)
+                .then((responce) => {
+                    let curPosts = responce.data;
+
+                    let row = curPosts[(this.$route.params.id - 1)];
+                    row.push({
+                        'authorId' : this.$store.getters.getId - 1,
+                        'title': this.title,
+                        'text': this.text,
+                    });
+                    curPosts[(this.$route.params.id - 1)] = row;
+
+                    this.axios.put(this.$store.getters.getPostLink, curPosts)
+                        .then(
+                            (response) => {
+                                if(response.data == "ok") {
+                                    window.alert('Вы успешно оствили запись!');
+                                    //this.$router.push('/users/' + this.$route.params.id);
+                                    this.upd();
+                                } else {
+                                    window.alert('Что-то пошло не так! Попробуйте ещё раз');
+                                }
+                            } 
+                        );
+                    
+                })
+            this.title = '';
+            this.text = '';
         }
     },
     mounted() {
@@ -133,7 +172,4 @@ export default {
 </script>
 
 <style>
-.post {
-    margin-top: 60px;
-}
 </style>
