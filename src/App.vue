@@ -1,7 +1,7 @@
 <template>
   <v-app id="app">
       <v-navigation-drawer v-if="$store.getters.getIsLogined"
-                           color="green"
+                           color="deep-orange"
                            dark
                            expand-on-hover
                            hide-overlay

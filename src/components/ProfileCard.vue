@@ -10,7 +10,7 @@
           <v-list-item-title class="font-weight-bold">{{name}}</v-list-item-title>
           <v-list-item-subtitle>{{city}}</v-list-item-subtitle>
 
-          <v-btn color="green" outlined class="mt-3" :to="'/users/' + (id + 1)" >
+          <v-btn color="teal" outlined class="mt-3" :to="'/users/' + (id + 1)" >
             <v-icon class="mr-3">mdi-account-badge-horizontal-outline</v-icon> Перейти в профиль
           </v-btn>
       </v-list-item-content>

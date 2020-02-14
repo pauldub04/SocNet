@@ -7,7 +7,8 @@
             
             <div v-for="field in userGaps" :key="field.label">
                 <div align="left">{{field.shortLabel}}</div>
-                <v-text-field :label="field.label"
+                <v-text-field color="teal"
+                              :label="field.label"
                               v-model="userInfo[field.item]"
                               outlined
                               @keyup.enter="signUp"

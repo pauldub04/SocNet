@@ -6,6 +6,7 @@
             </v-card-title>
 
             <v-text-field
+                color="teal"
                 label="Введите логин"
                 v-model="login"
                 clearable
@@ -14,6 +15,7 @@
             ></v-text-field>
 
             <v-text-field
+                color="teal"
                 label="Введите пароль"
                 v-model="password"
                 :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
@@ -40,6 +42,7 @@ export default {
       return {
           password: '',
           login: '',
+          show: false,
       }  
     },
     methods: {

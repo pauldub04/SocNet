@@ -8,6 +8,7 @@ export default new Vuex.Store({
     user: {},
     id: '',
     usersLink: 'http://188.225.47.187/api/jsonstorage/16511f65a152238deddcf81efe9fbcd7',
+    postsLink: 'http://188.225.47.187/api/jsonstorage/2c037b6e61776ba2b20ae7fef3b0652b',
     isLogined: false,
 
   },
@@ -38,5 +39,6 @@ export default new Vuex.Store({
     getId: function (state) { return state.id },
     getIsLogined: function (state) { return state.isLogined },
     getUserLink: function (state) { return state.usersLink },
+    getPostLink: function (state) { return state.postsLink },
   }
 })

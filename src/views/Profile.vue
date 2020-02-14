@@ -16,8 +16,8 @@
     <div>
         <v-row class="text-left">
             <v-col cols="10">
-                <h1 class="green--text text--darken-2">
-                    <v-icon large color="green darken-2">mdi-account-outline</v-icon>
+                <h1 class="teal--text text--darken-2">
+                    <v-icon large color="cyan darken-2">mdi-account-outline</v-icon>
                     {{user.name}}
                 </h1>
             </v-col>
@@ -44,6 +44,29 @@
         </v-row>
         
         <v-divider class="my-3"></v-divider>
+        
+        <div v-if="$store.getters.getIsLogined">
+            <v-row class="text-left">
+                <v-col cols="9">
+                    <h2 class="myt-3">Создать новую публикацию</h2>
+                    <v-text-field 
+                    outlined
+                    color="teal"
+                    label="Заголовок"
+                    v-model="name">
+                    </v-text-field>
+                    <v-text-field 
+                    outlined
+                    label="Текст"
+                    color="teal"
+                    v-model="text">
+                    </v-text-field>
+                <v-btn color="teal" class="white--text" @click="send()">Опубликовать</v-btn>
+                </v-col>
+            </v-row>
+            <v-divider class="my-3"></v-divider>
+        </div>
+
         <v-row class="text-left">
                 <h2>Публикации</h2>
             <v-col cols="9">
@@ -72,7 +95,9 @@ export default {
     data(){
         return {
             posts: [],
-            user: {}
+            user: {},
+            name : '',
+            text : ''
         }
     },
     watch: {
@@ -93,12 +118,11 @@ export default {
         upd () {
             this.$axios.get(this.$store.getters.getUserLink)
                 .then(response=>{
-                    this.user = response.data[(this.$route.params.id - 1)]
+                    this.user = response.data[(this.$route.params.id - 1)];
                 })
-                this.$axios.get('http://jsonplaceholder.typicode.com/posts')
-                //http://188.225.47.187/api/jsonplaceholder.php?endpoint=posts
+            this.$axios.get(this.$store.getters.getPostLink)
                 .then(response=>{
-                    this.posts = response.data;
+                    this.posts = response.data[(this.$route.params.id - 1)];
                 })
         }
     },
