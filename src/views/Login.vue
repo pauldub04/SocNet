@@ -8,6 +8,7 @@
             <v-text-field
                 label="Введите логин"
                 v-model="login"
+                clearable
                 outlined
                 @keyup.enter="auth"
             ></v-text-field>
@@ -15,6 +16,10 @@
             <v-text-field
                 label="Введите пароль"
                 v-model="password"
+                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="show ? 'text' : 'password'"
+                @click:append="show = !show"
+                clearable
                 outlined
                 @keyup.enter="auth"
             ></v-text-field>
@@ -39,7 +44,7 @@ export default {
     },
     methods: {
         auth() {
-            this.axios.get(this.$store.getters.getAxiosLink)
+            this.axios.get(this.$store.getters.getUserLink)
                 .then((responce) => {
                     let users =  responce.data;
                     let found = false;

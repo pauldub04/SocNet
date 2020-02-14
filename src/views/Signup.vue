@@ -84,10 +84,11 @@ export default {
     },
     methods: {
         signUp () {
-            this.axios.get(this.$store.getters.getAxiosLink)
+            this.axios.get(this.$store.getters.getUserLink)
                 .then((responce) => {
                     let curUsers = responce.data;
-                    curUsers[curUsers.length] = {
+
+                    curUsers.push({
                         'login' : this.userInfo.login, 
                         'password' : this.userInfo.password,
                         'name' : this.userInfo.name,
@@ -96,11 +97,20 @@ export default {
                         'city': this.userInfo.city,
                         'company' : this.userInfo.company,
                         'photo' : this.userInfo.photo,
-                    }
-                    this.axios.put(this.$store.getters.getAxiosLink, curUsers);
-                    window.alert('Вы успешно зарегистировалтсь! Войдите в аккаунт');
+                    });
+
+                    this.axios.put(this.$store.getters.getUserLink, curUsers)
+                        .then(
+                            (response) => {
+                                if(response.data == "ok") {
+                                    window.alert('Вы успешно зарегистировалтсь! Войдите в аккаунт');
+                                    this.$router.push('/login');
+                                } else {
+                                    window.alert('Что-то пошло не так! Попробуйте ещё раз');
+                                }
+                            } 
+                        );
                     
-                    this.$router.push('/login');
                 })
         }
     } 

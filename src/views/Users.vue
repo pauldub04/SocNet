@@ -1,36 +1,34 @@
 <template>
 <div>
-    <v-row v-for="n in (users.length / 2)"
-           justify="center"
-           :key="n"
-    >
-        <v-col cols="5">
-            <ProfileCard :name="users[cardValue(1, n)].name"
-                         :id="cardValue(1, n)"
-                         :city="users[cardValue(1, n)].city"
-                         :img="users[cardValue(1, n)].photo"
-            ></ProfileCard>
+    <h3 v-if="!$store.getters.getIsLogined">Войдите чтобы видеть список пользователей</h3>
+    <div class="d-flex justify-center" v-if="!$store.getters.getIsLogined">
+        <Sign></Sign>
+    </div>
 
-        </v-col>
-        <v-col cols="5">
-            <ProfileCard :name="users[cardValue(2, n)].name"
-                         :id="cardValue(2, n)"
-                         :city="users[cardValue(2, n)].city"
-                         :img="users[cardValue(2, n)].photo"
-            ></ProfileCard>
-
-        </v-col>
-    </v-row>
+    <div v-else>
+        <v-row>
+            <v-col cols="12" sm="5" v-for="(user, index) in users" :key="index">
+                <ProfileCard :name="user.name"
+                             :id="index"
+                             :city="user.city"
+                             :img="user.photo"                         
+                >
+                </ProfileCard>
+            </v-col>
+        </v-row>
+    </div>
 </div>
 </template>
 
 
 <script>
 import ProfileCard from '../components/ProfileCard.vue'
+import Sign from '../components/Sign.vue'
 
 export default {
     components: {
-      ProfileCard
+      ProfileCard,
+      Sign
     },
     data(){
         return {
@@ -40,7 +38,7 @@ export default {
     watch: {
         $route: {
             handler(){
-                this.$axios.get(this.$store.getters.getAxiosLink)
+                this.$axios.get(this.$store.getters.getUserLink)
                 .then(response=>{
                     this.users = response.data
                 })

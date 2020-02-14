@@ -91,7 +91,7 @@ export default {
                 return 'http://' + url;
         },
         upd () {
-            this.$axios.get(this.$store.getters.getAxiosLink)
+            this.$axios.get(this.$store.getters.getUserLink)
                 .then(response=>{
                     this.user = response.data[(this.$route.params.id - 1)]
                 })
