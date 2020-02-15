@@ -57,9 +57,7 @@
     
     <v-content class="px-12 py-3">
       <v-container fluid>
-        <router-view v-on:login="updateUser"
-                     :isLogined="isLogined"
-                     :axiosLink="axiosLink"/>
+        <router-view v-on:login="updateUser"/>
       </v-container>
     </v-content>
 
